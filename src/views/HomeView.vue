@@ -13,6 +13,9 @@
     <div v-if="message" :class="{ 'error': isError, 'success': !isError }">
       {{ message }}
     </div>
+    <div>
+      {{ bot_response }}
+    </div>
   </div>
 </template>
 
@@ -24,7 +27,8 @@ export default {
     return {
       selectedFile: null,
       message: '',
-      isError: false
+      isError: false,
+      bot_response: ''
     }
   },
   methods: {
@@ -38,16 +42,18 @@ export default {
         return;
       }
 
+      const test = "k"
+      test.split("\n")
       const formData = new FormData();
       formData.append('image', this.selectedFile);
 
       try {
         this.message = "En cours..."
-        await axios.post('http://localhost:5000/submit/image', formData, {
+        await axios.post('http://31.187.72.224:5000/submit/image', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }}
-        ).then((response) => console.log(response.data))
+        ).then((response) => this.bot_response = response.data.result.split("\\n")[1].replace("meter","compteur")/*console.log(response.data)*/)
 
         this.message = "Fichier uploadé avec succès !";
         this.isError = false;

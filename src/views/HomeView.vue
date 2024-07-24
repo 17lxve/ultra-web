@@ -39,15 +39,15 @@ export default {
       }
 
       const formData = new FormData();
-      formData.append('file', this.selectedFile);
+      formData.append('image', this.selectedFile);
 
       try {
         this.message = "En cours..."
-        await axios.post('http://31.187.72.224:5000/submit/image', formData, {
+        await axios.post('http://localhost:5000/submit/image', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
-          }
-        }).then((response) => alert(response.data))
+          }}
+        ).then((response) => console.log(response.data))
 
         this.message = "Fichier uploadé avec succès !";
         this.isError = false;
